@@ -60,15 +60,15 @@ function lt_configs() {
 # Modify your config files for the dark theme.
 function dk_configs() {
     xfconf-query --create -c xsettings -p /Net/ThemeName -t string -s Aperture-DK
-    ln -fs "$HOME"/.config/aperture-linux/configs/zsh/.zshrc-no-pywal "$HOME"/.zshrc
-    ln -fs "$HOME"/.config/aperture-linux/configs/termite/dk "$HOME"/.config/termite/config
-    ln -fs "$HOME"/.config/aperture-linux/configs/polybar/dk "$HOME"/.config/polybar/config
+    ln -fs "$HOME"/.config/aperture-linux/configs/pkgs/zsh/.zshrc-no-pywal "$HOME"/.zshrc
+    ln -fs "$HOME"/.config/aperture-linux/configs/pkgs/termite/dk "$HOME"/.config/termite/config
+    ln -fs "$HOME"/.config/aperture-linux/configs/pkgs/polybar/dk "$HOME"/.config/polybar/config
 }
 
 function cm_configs() {
 	cp -r ~/.config/aperture-linux/configs/zsh/.zshrc-pywal ~/.zshrc
 	wal -c
-	wal "$BACKEND" -n -i ~/.config/aperture-linux/wallpapers/tmp/
-	cp -r ~/.config/aperture-linux/configs/polybar/cm ~/.config/polybar/config
+	wal "$BACKEND" -n -i ~/.config/aperture-linux/.tmp/theme/wallpapers/
+	cp -r ~/.config/aperture-linux/configs/pkgs/polybar/cm ~/.config/polybar/config
 	~/.config/aperture-linux/scripts/themes/warnai/warnai --wal --gtk fantome --norender
 }
