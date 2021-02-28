@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+bspc rule -a screenkey --unmanage
+bspc rule -a gcolor2 state=floating center=true
+bspc rule -a lxappearance state=floating center=true
+bspc rule -a spotify state=pseudo_tiled
+bspc rule -a file-roller state=pseudo_tiled
+bspc rule -a transmission-gtk state=pseudo_tiled
+bspc rule -a colorpicker state=floating
+bspc rule -a Gpicview state=floating center=true
+bspc rule -a kitty state=floating center=true
+bspc rule -a Thunar state=floating center=true
+bspc rule -a Conky state=floating center=true
+bspc rule -a UXTerm state=floating center=true
+bspc rule -a Galculator state=floating center=true
+bspc rule -a XTerm state=floating center=true
+bspc rule -a URxvt state=floating center=true
+bspc rule -a Termite state=floating center=true
