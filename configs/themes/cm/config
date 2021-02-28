@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# Random selection for Aperture custom wallpapers.
+
+# Automatically resize the images to fill the screen and output an image.
+# Don't touch anything if you don't want to break the link between the theme and the lock screen.
+
+# For some reason ImageMagick deletes the information of the image colors.
+# to make pywal work, you need to delete the cache and rebuild it, it is
+# the only solution I found to make it work without breaking the ImageMagick module.
+
+# Source theme variables
+${"$HOME"/.config/aperture-linux/configs/themes/variables}
+
+{
+    # Get total time
+    time -p (
+
+        # Generate time
+        echo "--------------------------------"
+        echo "+ $FULL_DATE
+--------------------------------"
+
+        # Generate debug logs.
+        N=$(date +%s%N)
+        export PS4='+ [$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+        set -x
+
+        # Remove .tmp directory files.
+        cleanup
+
+        # Resize the image(s)
+        readarray -t <<<"$RES"
+        for m in "${MAPFILE[@]}"; do
+            echo resizing image to "$m" pixel size...
+            convert "$CM_WALLS" -resize "$m"^ -gravity center -extent "$m"^ "$HOME"/.config/aperture-linux/.tmp/theme/wallpapers/wallpaper_"$m".png
+        done
+
+        # Set wallpaper(s)
+        for w in "${MAPFILE[@]}"; do
+            echo setting "$w" wallaper...
+            FEH="$FEH $HOME/.config/aperture-linux/.tmp/theme/wallpapers/wallpaper_$w.png"
+        done
+        eval "$FEH"
+        cm_configs
+        echo "--------------"
+    )
+    echo "--------------"
+
+} 2>&1 | tee "$HOME"/.config/aperture-linux/.tmp/theme/log/cm.log
