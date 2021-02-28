@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+#
+# Main file for theme variables.
+
+# Detect screen resolution(s).
+RES=$(xrandr --current  \
+    | grep '*'          \
+    | uniq              \
+    | awk '{print $1}')
+
+# Detect monitors
+# MONITOR=$(xrandr --listactivemonitors | awk '/^\s+[0-9]+:/ {print $4}')
+
+# Cleanup files function.
+PNG="$HOME/.config/aperture-linux/.tmp/theme/log/*.png"
+LOG="$HOME/.config/aperture-linux/.tmp/theme/log/*.log"
+
+# Set wallpaper
+FEH="feh --bg-fill --no-fehbg"
+
+# Pick a random image.
+LT_WALLS=$(find "$HOME"/.config/aperture-linux/configs/themes/lt/wallpapers/ -type f | shuf -n 1)
+DK_WALLS=$(find "$HOME"/.config/aperture-linux/configs/themes/dk/wallpapers/ -type f | shuf -n 1)
+CM_WALLS=$(find "$HOME"/.config/aperture-linux/configs/themes/cm/wallpapers/ -type f | shuf -n 1)
+
+# Pywal backend
+# BACKEND="--backend colorz"
+
+# Print times and date.
+FULL_DATE=$(date)
+TIME=$(date  +%H:%M)
+START="18:00"
+FINISH="08:00"
+
+# Remove .tmp directory files.
+function cleanup() {
+for file in $PNG
+do
+	if [[ -f "$file" ]]; then
+	    rm -fr "$PNG"
+	fi
+done
+
+for file in $LOG
+do
+	if [[ -f "$file" ]]; then
+	    rm -fr "$LOG"
+	fi
+done
+}
+
+# Modify your config files for the light theme.
+function lt_configs() {
+    xfconf-query --create -c xsettings -p /Net/ThemeName -t string -s Aperture-LT
+    ln -fs "$HOME"/.config/aperture-linux/configs/pkgs/zsh/.zshrc-no-pywal "$HOME"/.zshrc
+    ln -fs "$HOME"/.config/aperture-linux/configs/pkgs/termite/lt "$HOME"/.config/termite/config
+    ln -fs "$HOME"/.config/aperture-linux/configs/pkgs/polybar/lt "$HOME"/.config/polybar/config
+}
+
+# Modify your config files for the dark theme.
+function dk_configs() {
+    xfconf-query --create -c xsettings -p /Net/ThemeName -t string -s Aperture-DK
+    ln -fs "$HOME"/.config/aperture-linux/configs/zsh/.zshrc-no-pywal "$HOME"/.zshrc
+    ln -fs "$HOME"/.config/aperture-linux/configs/termite/dk "$HOME"/.config/termite/config
+    ln -fs "$HOME"/.config/aperture-linux/configs/polybar/dk "$HOME"/.config/polybar/config
+}
+
+function cm_configs() {
+	cp -r ~/.config/aperture-linux/configs/zsh/.zshrc-pywal ~/.zshrc
+	wal -c
+	wal "$BACKEND" -n -i ~/.config/aperture-linux/wallpapers/tmp/
+	cp -r ~/.config/aperture-linux/configs/polybar/cm ~/.config/polybar/config
+	~/.config/aperture-linux/scripts/themes/warnai/warnai --wal --gtk fantome --norender
+}
