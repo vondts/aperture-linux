@@ -2,8 +2,8 @@
 # Main script for sourcing other bspwm configs.
 
 # Autostart
-source $HOME/.config/aperture-linux/configs/bspwm/autostart
+    ${$HOME/.config/aperture-linux/configs/bspwm/autostart}
 # Settings
-source $HOME/.config/aperture-linux/configs/bspwm/settings
+    ${$HOME/.config/aperture-linux/configs/bspwm/settings}
 # Rules
-source $HOME/.config/aperture-linux/configs/bspwm/rules
+    ${$HOME/.config/aperture-linux/configs/bspwm/rules}

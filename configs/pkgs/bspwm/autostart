@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
+#
+# Autostart programs.
 
-# Source files
-# Polybar
-source $HOME/.config/aperture-linux/scripts/polybar/launch.sh
+# Source files:
+#   Polybar
+${"$HOME"/.config/aperture-linux/scripts/polybar/launch.sh}
 
 # The run function checks whether there already is an instance
 # of program running and only runs program if there is none.
 # https://wiki.archlinux.org/index.php/Awesome#Autostart
 
 function run {
-  if ! pgrep -f $1 ;
+  if ! pgrep -f "$1" ;
   then
-    $@&
+    "$@"&
   fi
 }
 
@@ -21,4 +23,4 @@ xsetroot -cursor_name left_ptr
 run picom --experimental-backends
 run xfsettingsd
 run greenclip daemon
-run while true; do killall -USR1 termite ; sleep 2; done
+run while true; do killall -USR1 termite; sleep 2; done
